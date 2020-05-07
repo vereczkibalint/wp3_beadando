@@ -26,7 +26,6 @@ class Auth extends CI_Controller
 	 */
 	public function index()
 	{
-
 		if (!$this->ion_auth->logged_in())
 		{
 			// redirect them to the login page
@@ -64,6 +63,10 @@ class Auth extends CI_Controller
 	 */
 	public function login()
 	{
+                if($this->ion_auth->logged_in()){
+                    redirect('/');
+                }
+                
 		$this->data['title'] = $this->lang->line('login_heading');
 
 		// validate form input
