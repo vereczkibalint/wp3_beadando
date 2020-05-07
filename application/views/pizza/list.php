@@ -1,18 +1,26 @@
 <?php if($pizzas != null || !empty($pizzas)): ?> 
-    <h3>Összes árucikk</h3>
-    <?php foreach($pizzas as $item): ?>
-        <ul>
-            <li class="media">
-                <div class="media-body">
-                    <h5 class="mt-0 mb-1"><?=$item->name?></h5>
-                    <?=$item->price?><?php echo(' Ft')?><br/>
-                    <a class="btn btn-primary btn-sm" href="<?=site_url('ware/'.$item->id)?>"><?php echo('Megnéz')?></a>
+<div class="container m-3">
+    <h3 class="mb-3">Összes termék</h3>
+    <div class="row">
+        <?php foreach($pizzas as $item): ?>
+            <div class="card m-3 mx-auto" style="width: 18rem;">
+                <?php if($item->image): ?>
+                    <img class="card-img-top" src="<?=base_url('uploads/pizza/'.$item->image)?>" alt="Card image cap">
+                <?php else: ?>
+                    <img class="card-img-top" src="<?=base_url('assets/images/pizza_placeholder.png')?>" alt="Nincs elérhető kép!">
+                <?php endif; ?>
+                <div class="card-body">
+                    <h5 class="card-title"><?=$item->name?></h5>
+                    <p class="card-text"><?=$item->price?> Ft</p>
+                    <?php if($this->ion_auth->logged_in()): ?>
+                        <a href="#" class="btn btn-primary btn-sm">Kosárba</a>
+                    <?php endif; ?>
+                        <a href="<?=base_url('item_details/'.$item->id)?>" class="btn btn-info btn-sm">Részletek</a>
                 </div>
-            </li>
-        </ul>
-    <?php endforeach;?>
-<?php else: ?>
-    <?php echo('Nincsenek áruk')?><br/>
-<?php endif; ?>
-
-
+            </div>
+        <?php endforeach;?>
+            </div>
+    <?php else: ?>
+        <h2 class="text-center">Nincsenek áruk!</h2>
+    <?php endif; ?>
+</div>
