@@ -1,6 +1,5 @@
 <?php $this->load->view('layout/header'); ?>
-<?php $this->load->view('layout/navbar'); ?>
-<div class='text-center'>
+<div class='text-center registerBox'>
     <?php
     echo isset($_SESSION['auth_message']) ? $_SESSION['auth_message'] : '';
     ?>
