@@ -8,6 +8,9 @@ class Register extends CI_Controller{
     }
     
     public function index(){
+        if($this->ion_auth->logged_in()){
+            redirect('/');
+        }
         $this->form_validation->set_rules('first_name', 'Keresztnév','required');
         $this->form_validation->set_rules('last_name', 'Vezetéknév','required');
         $this->form_validation->set_rules('username','Felhasználónév','required|is_unique[users.username]');
