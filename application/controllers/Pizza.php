@@ -9,12 +9,12 @@ class Pizza extends CI_Controller{
     }
     
     public function index(){
+
         $pizzas = $this->pizza->get_list();
         
         $data['pizzas'] = $pizzas;
         
         $this->load->view('layout/header');
-        $this->load->view('layout/navbar');
         $this->load->view('pizza/list', $data);
         $this->load->view('layout/footer');
     }
