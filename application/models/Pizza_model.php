@@ -33,7 +33,7 @@ class Pizza_model extends CI_Model{
         $item_count = $query->num_rows();
         
         if($item_count > 0){
-            return -1;
+            return false;
         }else{
             $this->db->insert('items', $item);
             return $this->db->insert_id();
