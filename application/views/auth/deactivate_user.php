@@ -1,3 +1,4 @@
+<?php $this->load->view('layout/header'); ?>
 <h1><?php echo lang('deactivate_heading');?></h1>
 <p><?php echo sprintf(lang('deactivate_subheading'), $user->username);?></p>
 
@@ -13,6 +14,7 @@
   <?php echo form_hidden($csrf); ?>
   <?php echo form_hidden(['id' => $user->id]); ?>
 
-  <p><?php echo form_submit('submit', lang('deactivate_submit_btn'));?></p>
+  <p><?php echo form_submit('submit', lang('deactivate_submit_btn'), ["class" => "btn btn-primary"]);?></p>
 
 <?php echo form_close();?>
+<?php $this->load->view('layout/footer'); ?>
