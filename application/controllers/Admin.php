@@ -14,4 +14,28 @@ class Admin extends CI_Controller{
             $this->load->view('layout/footer');
         }
     }
+
+    public function manage($type = null){
+        if(!$this->ion_auth->is_admin()){
+            show_error('Az oldal megtekintéséhez admin jogosultság szükséges!');
+        }else{
+            if($type == null){
+                show_error('Hibás paraméterek!');
+            }else{
+                $this->load->view('layout/header');
+                switch($type){
+                    case 'users':
+                        $this->load->view('admin/user_manage');
+                    break;
+                    case 'items':
+                        $this->load->view('admin/item_manage');
+                    break;
+                    default:
+                        show_error('Nem megfelelő paraméter!');
+                    break;
+                }
+                $this->load->view('layout/footer');
+            }
+        }
+    }
 }
