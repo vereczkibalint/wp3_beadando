@@ -19,10 +19,10 @@ class Pizza_model extends CI_Model{
     }
     
     public function select_by_id($id){
-        $this->db->select('item.id, item.category_id, item.name, item.price, item.image, item_categories.category_name');
+        $this->db->select('items.id, items.name, items.price, items.image, item_categories.category_name');
         $this->db->from('items');
-        $this->db->join('item_categories', 'item.category_id = item_categories.category_id');
-        $this->db->where('item.id', $id);
+        $this->db->join('item_categories', 'items.category_id = item_categories.category_id');
+        $this->db->where('items.id', $id);
         
         return $this->db->get()->row();
     }
