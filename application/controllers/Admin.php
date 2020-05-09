@@ -25,16 +25,16 @@ class Admin extends CI_Controller{
                 $this->load->view('layout/header');
                 switch($type){
                     case 'users':
-                        $this->load->view('admin/user_manage');
+                        redirect('auth');
                     break;
                     case 'items':
                         $this->load->view('admin/item_manage');
+                        $this->load->view('layout/footer');
                     break;
                     default:
                         show_error('Nem megfelelő paraméter!');
                     break;
                 }
-                $this->load->view('layout/footer');
             }
         }
     }
