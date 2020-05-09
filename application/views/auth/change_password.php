@@ -1,5 +1,4 @@
 <?php $this->load->view('layout/header'); ?>
-<?php $this->load->view('layout/navbar'); ?>
 <div class="mt-5 passwordChangeBox text-center">
 <h1 class="mb-3"><?php echo lang('change_password_heading');?></h1>
 
