@@ -14,8 +14,9 @@
                     <p class="card-text"><?=$item->price?> Ft</p>
                     <?php if($this->ion_auth->logged_in()): ?>
                         <a href="#" class="btn btn-primary btn-sm">Kosárba</a>
+                    <?php else: ?>
+                        <small>A rendeléshez kérjük jelentkezzen be!</small>
                     <?php endif; ?>
-                        <a href="<?=base_url('item_details/'.$item->id)?>" class="btn btn-info btn-sm">Részletek</a>
                 </div>
             </div>
         <?php endforeach;?>
