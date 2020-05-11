@@ -1,7 +1,7 @@
 <?php $this->load->view('layout/header'); ?>
+<a href="<?=base_url('admin')?>">&lt;Admin panel</a>
 <h1><?php echo lang('index_heading');?></h1>
 <p><?php echo lang('index_subheading');?></p>
-
 <div id="infoMessage"><?php echo $message;?></div>
 <div class="table-responsive">
 	<table class="table mx-auto">
