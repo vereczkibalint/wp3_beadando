@@ -1,4 +1,4 @@
-.passwordChangeBox, .loginBox, .registerBox{
+.passwordChangeBox, .loginBox, .registerBox, .editItemBox, .cartBox, .orderBox{
     width: 60%;
     margin: 0 auto;
 }
