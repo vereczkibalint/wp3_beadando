@@ -13,7 +13,7 @@
                     <h5 class="card-title"><?=$item->name?></h5>
                     <p class="card-text"><?=$item->price?> Ft</p>
                     <?php if($this->ion_auth->logged_in()): ?>
-                        <a href="#" class="btn btn-primary btn-sm">Kosárba</a>
+                        <a href="<?=base_url('cart/add/'.$item->id)?>" class="btn btn-primary btn-sm">Kosárba</a>
                     <?php else: ?>
                         <small>A rendeléshez kérjük jelentkezzen be!</small>
                     <?php endif; ?>
