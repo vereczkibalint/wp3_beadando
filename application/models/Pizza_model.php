@@ -40,6 +40,19 @@ class Pizza_model extends CI_Model{
         }
     }
     
+    public function update($id, $category_id, $name, $price, $image = null){
+        $pizza = [
+            'category_id' => $category_id,
+            'name' => $name,
+            'price' => $price,
+            'image' => $image
+        ];
+        
+        $this->db->where('id', $id);
+        
+        $this->db->update('items', $pizza);
+    }
+    
     public function delete($id){
         $this->db->where('id', $id);
         return $this->db->delete('items');
