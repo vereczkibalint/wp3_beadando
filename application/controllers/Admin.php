@@ -57,9 +57,9 @@ class Admin extends CI_Controller{
                 if($this->form_validation->run() === TRUE){
                     $upload_config['allowed_types'] = 'jpg|png|gif';
                     $upload_config['max_size'] = 5000;
-                    $upload_config['min_height'] = 300;
+                    $upload_config['min_height'] = 200;
                     $upload_config['max_height'] = 1000;
-                    $upload_config['min_width'] = 300;
+                    $upload_config['min_width'] = 200;
                     $upload_config['max_width'] = 1000;
 
                     $upload_config['upload_path'] = './uploads/pizza/';
@@ -126,20 +126,21 @@ class Admin extends CI_Controller{
             }
         }
     }
-    
-    public function update_item(){
-        
-    }
-    
+
     public function delete_item($itemid = null){
-        if($itemid == null){
+        if($this->ion_auth->is_admin()){
+            if($itemid == null){
             show_error('Hiányzó paraméter!');
-        }else{
-            if($this->pizza->delete($itemid)){
-                redirect('admin/manage/items');
             }else{
-                show_error('Hiba a törlés közben!');
+                if($this->pizza->delete($itemid)){
+                    redirect('admin/manage/items');
+                }else{
+                    show_error('Hiba a törlés közben!');
+                }
             }
+        }
+        else{
+            show_error('Az oldal megtekintéséhez admin jogosultság szükséges!');
         }
     }
 }
