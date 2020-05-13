@@ -9,7 +9,7 @@ class Orders extends CI_Controller{
     public function index(){
         if($this->ion_auth->logged_in()){
             
-            $orders = $this->order->get_record_by_userid($this->ion_auth->user()->row()->id);
+            $orders = $this->order->get_record_by_userid($this->ion_auth->get_user_id());
             
             $view_params = [
                 'orders' => $orders
@@ -27,8 +27,7 @@ class Orders extends CI_Controller{
     public function details($id = null){
         if($this->ion_auth->logged_in()){
             if($id != null){
-                $order = $this->order->get_order_by_id($id);
-                die(var_dump($order));
+                $order = $this->order->get_order_by_id($id, $this->ion_auth->get_user_id());
                 if($order == null){
                     show_error('Nincs ilyen rendelés az adatbázisban!');
                 }else{
