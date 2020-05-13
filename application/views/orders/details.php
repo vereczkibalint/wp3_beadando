@@ -7,6 +7,7 @@
                 <th>Termék neve</th>
                 <th>Darabszám</th>
                 <th>Termék ára</th>
+                <th>Szállítási cím</th>
             </tr>
         </thead>
         <tbody>
@@ -15,6 +16,7 @@
                 <td><?=$order_item['name']?></td>
                 <td><?=$order_item['quantity']?></td>
                 <td><?=$order_item['price']?> Ft</td>
+                <td><?php echo $order_item['postal_code'] . ' ' . $order_item['city'] . ', ' . $order_item['street'] . ' ' . $order_item['number'].'.'; ?>
             </tr>
             <?php endforeach; ?>
         </tbody>
