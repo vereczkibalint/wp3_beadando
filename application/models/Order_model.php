@@ -26,26 +26,34 @@ class Order_model extends CI_Model {
         $this->db->from('orders');
         $this->db->join('order_details', 'orders.order_id = order_details.order_id');
         $this->db->join('items', 'order_details.item_id = items.id');
-        $this->db->order_by('order_date', 'ASC');
         $this->db->where('orders.user_id', $userid);
         $this->db->group_by('orders.order_id');
+        $this->db->order_by('order_date', 'ASC');
+        
+        
         
         return $this->db->get()->result_array();
     }
     
-    public function get_order_by_id($orderid){
-        $this->db->select('orders.order_id, items.name, orders.order_date, sum(items.price * order_details.quantity) as sumprice');
+    public function get_order_by_id($orderid, $userid){
+        $this->db->select('items.name, items.price, order_details.quantity, order_details.postal_code, order_details.city, order_details.street, order_details.number');
         $this->db->from('orders');
         $this->db->join('order_details', 'orders.order_id = order_details.order_id');
         $this->db->join('items', 'order_details.item_id = items.id');
-        $this->db->order_by('order_date', 'ASC');
+        $this->db->where('orders.user_id', $userid);
         $this->db->where('orders.order_id', $orderid);
-        $this->db->group_by('orders.order_id');
         
         return $this->db->get()->result_array();
     }
     
-    public function add_order(){
+    public function add_order($user_id){
+        $order_record = [
+            'user_id' => $user_id,
+            'order_date' => date('Y-m-d h:i:s')
+        ];
         
+        $this->db->insert('orders', $order_record);
+        
+        return $this->db->insert_id();
     }
 }
