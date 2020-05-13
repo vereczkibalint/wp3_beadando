@@ -1,4 +1,7 @@
 <?php $this->load->view('layout/header'); ?>
+<?php if(isset($message) && !empty($message)): ?>
+<?php echo "<div class='alert alert-success'>".$message."</div>"; ?>
+<?php endif; ?>
 <?php if($items != null || !empty($items)): ?>
 <div class="cartBox table-responsive">
     <h2 class="text-center">Kosár</h2>
