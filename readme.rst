@@ -2,9 +2,9 @@
 PizzaShop
 **********
 
-Webprogramozás III. gyakorlat beadandó
+| Webprogramozás III. gyakorlat beadandó
 
-Felhasználói fiókok:
+| Felhasználói fiókok:
 
-admin - password
-demo - demodemo
+| admin - password
+| demo - demodemo
