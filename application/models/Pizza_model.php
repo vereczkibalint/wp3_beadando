@@ -27,30 +27,26 @@ class Pizza_model extends CI_Model{
         return $this->db->get()->row();
     }
     
-    public function insert($item){
-        $query = $this->db->get_where('items', ['name' => $item['name']]);
-        
-        $item_count = $query->num_rows();
-        
-        if($item_count > 0){
-            return false;
-        }else{
-            $this->db->insert('items', $item);
-            return $this->db->insert_id();
-        }
+    public function insert($name, $category, $price, $filename){
+            $item = [
+                'category_id' => $category,
+                'name' => $name,
+                'price' => $price,
+                'image' => $filename
+            ];
+            return $this->db->insert('items', $item);
     }
     
-    public function update($id, $category_id, $name, $price, $image = null){
+    public function update($id, $category_id, $name, $price){
         $pizza = [
             'category_id' => $category_id,
             'name' => $name,
-            'price' => $price,
-            'image' => $image
+            'price' => $price
         ];
         
         $this->db->where('id', $id);
         
-        $this->db->update('items', $pizza);
+        return $this->db->update('items', $pizza);
     }
     
     public function delete($id){
