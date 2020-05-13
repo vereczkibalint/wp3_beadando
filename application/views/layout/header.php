@@ -40,6 +40,8 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="user_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $this->ion_auth->user()->row()->username; ?></a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="user_dropdown">
+            <a class="nav-link" href="<?=base_url('export/export_menu')?>">Terméklista letöltése</a>
+            <div class="dropdown-divider"></div>
             <a class="nav-link" href="<?php echo base_url('orders'); ?>">Rendeléseim</a>
             <div class="dropdown-divider"></div>
             <a class="nav-link" href="<?php echo base_url('auth/change_password'); ?>">Jelszó módosítása</a>
