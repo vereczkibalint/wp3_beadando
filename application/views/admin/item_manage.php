@@ -26,10 +26,10 @@
                     <tbody>
                         <?php foreach($pizzas as $pizza): ?>
                         <tr>
-                            <td><?=$pizza->id?></td>
-                            <td><?=$pizza->name?></td>
-                            <td><?=$pizza->price?></td>
-                            <td><a href="<?=base_url('admin/edit_item/'.$pizza->id)?>">Szerkeszt</a> <a href="<?=base_url('admin/delete_item/'.$pizza->id)?>" class="text-danger">Töröl</a></td>
+                            <td><?=$pizza['id']?></td>
+                            <td><?=$pizza['name']?></td>
+                            <td><?=$pizza['price']?></td>
+                            <td><a href="<?=base_url('admin/edit_item/'.$pizza['id'])?>">Szerkeszt</a> <a href="<?=base_url('admin/delete_item/'.$pizza['id'])?>" class="text-danger">Töröl</a></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
