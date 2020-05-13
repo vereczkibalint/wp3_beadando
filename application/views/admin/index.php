@@ -1,4 +1,8 @@
+<?php $this->load->view('layout/header'); ?>
 <div class="adminPanelBox mt-3">
+    <?php if(isset($message) && !empty($message)): ?>
+    <?php echo "<div class='alert alert-info'>".$message."</div>"; ?>
+    <?php endif; ?>
     <div class="row">
         <div class="col-md-4">
             <div class="card">
@@ -16,3 +20,4 @@
         <div class="col-md-8"></div>
     </div> <!-- .row -->
 </div> <!-- .adminPanelBox -->
+<?php $this->load->view('layout/footer'); ?>
