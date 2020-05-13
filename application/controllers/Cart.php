@@ -3,6 +3,8 @@ class Cart extends CI_Controller{
     public function __construct(){
         parent::__construct();
         $this->load->model('Cart_model', 'cart');
+        $this->load->model('Order_model', 'order');
+        $this->load->model('Order_details_model', 'order_details');
         $this->load->library('form_validation');
         $this->load->helper('url');
     }
@@ -62,8 +64,25 @@ class Cart extends CI_Controller{
             $this->form_validation->set_rules('hazszam', 'Házszám','numeric|required');
             
             if($this->form_validation->run() === TRUE){
-                $this->cart->empty_cart();
-                redirect('/');
+                $order_id = $this->order->add_order($this->ion_auth->get_user_id());
+                if($order_id > 0){
+                    if($this->order_details->add_order_details($order_id, $items, $this->input->post('irsz'), $this->input->post('varos'), $this->input->post('cim'), $this->input->post('hazszam'))){
+                        $this->cart->empty_cart();
+                        $success['message'] = "Sikeres rendelés!";
+                        $success['items'] = [];
+                        $this->load->view('cart/list', $success);
+                    }else{
+                        // redirect mert nem történt meg az order_details beszúrása
+                        $error['message'] = "Sikertelen rendelés!";
+                        $success['items'] = [];
+                        $this->load->view('cart/list', $error);
+                    }
+                }else{
+                    // redirect mert nem történt meg az order beszúrása
+                    $error['message'] = "Sikertelen rendelés!";
+                    $success['items'] = [];
+                    $this->load->view('cart/list', $error);
+                }
             }else{
                 $this->load->view('cart/order', $view_params);
             }
