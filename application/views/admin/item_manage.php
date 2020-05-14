@@ -24,6 +24,9 @@
                         <th>Műveletek</th>
                     </thead>
                     <tbody>
+                        <?php if(empty($pizzas)) : ?>
+                            <h3 class="text-center">Nincs megjeleníthető termék!</h3>
+                        <?php else: ?>
                         <?php foreach($pizzas as $pizza): ?>
                         <tr>
                             <td><?=$pizza['id']?></td>
@@ -32,10 +35,11 @@
                             <td><a href="<?=base_url('admin/edit_item/'.$pizza['id'])?>">Szerkeszt</a> <a href="<?=base_url('admin/delete_item/'.$pizza['id'])?>" class="text-danger">Töröl</a></td>
                         </tr>
                         <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
-            <a href="<?=base_url('admin/add_item')?>">Termék felvétele</a>
+            <a href="<?=base_url('admin/add_item')?>">Termék felvétele</a> | <a href="<?=base_url('admin/import_item')?>">Termék importálása CSV-ből</a>
         </div>
     </div> <!-- .row -->
 </div> <!-- .adminPanelBox -->
