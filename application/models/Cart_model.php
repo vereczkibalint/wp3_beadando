@@ -9,7 +9,7 @@ class Cart_model extends CI_Model{
         if(!$this->ion_auth->logged_in()){
             show_error('Ehhez a funkcióhoz be kell jelentkezni!');
         }else{
-            $this->db->select('cart.cart_id, cart.item_id, cart.user_id, items.name, items.price, cart.quantity');
+            $this->db->select('cart.cart_id, cart.item_id, cart.user_id, items.name, items.price');
             $this->db->from('cart');
             $this->db->join('items', 'cart.item_id = items.id');
             $this->db->where('cart.user_id', $this->ion_auth->get_user_id());
