@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1:3306
--- Létrehozás ideje: 2020. Máj 08. 09:58
+-- Létrehozás ideje: 2020. Máj 14. 21:38
 -- Kiszolgáló verziója: 10.4.10-MariaDB
 -- PHP verzió: 7.3.12
 
@@ -19,8 +19,24 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Adatbázis: `epqf7q_beadando`
+-- Adatbázis: `epqf7q_wp3_beadando`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `cart`
+--
+
+DROP TABLE IF EXISTS `cart`;
+CREATE TABLE IF NOT EXISTS `cart` (
+  `cart_id` int(11) NOT NULL AUTO_INCREMENT,
+  `item_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`cart_id`),
+  KEY `FK_cart_items` (`item_id`),
+  KEY `FK_cart_users` (`user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -56,18 +72,18 @@ CREATE TABLE IF NOT EXISTS `items` (
   `category_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `price` int(11) NOT NULL,
-  `image` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_items_item_categories` (`category_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 
 --
 -- A tábla adatainak kiíratása `items`
 --
 
 INSERT INTO `items` (`id`, `category_id`, `name`, `price`, `image`) VALUES
-(1, 1, 'Margarita', 890, ''),
-(6, 1, 'Mexikói', 1210, '');
+(19, 1, 'Mexikói', 990, 'mexikoi.jpg'),
+(20, 1, 'Hawaii', 990, 'hawaii.png');
 
 -- --------------------------------------------------------
 
@@ -80,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `item_categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(50) NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- A tábla adatainak kiíratása `item_categories`
@@ -102,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `login_attempts` (
   `login` varchar(100) NOT NULL,
   `time` int(11) UNSIGNED DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -117,14 +133,17 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `order_date` datetime NOT NULL,
   PRIMARY KEY (`order_id`),
   KEY `FK_orders_users` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 --
 -- A tábla adatainak kiíratása `orders`
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `order_date`) VALUES
-(1, 3, '2020-05-08 00:00:00');
+(17, 5, '2020-05-14 02:14:10'),
+(15, 5, '2020-05-14 10:23:30'),
+(14, 5, '2020-05-13 07:53:47'),
+(13, 5, '2020-05-13 07:35:50');
 
 -- --------------------------------------------------------
 
@@ -137,6 +156,10 @@ CREATE TABLE IF NOT EXISTS `order_details` (
   `order_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
+  `postal_code` varchar(4) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `street` varchar(200) NOT NULL,
+  `number` varchar(3) NOT NULL,
   KEY `FK_order_details_orders` (`order_id`),
   KEY `FK_order_details_items` (`item_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -145,10 +168,13 @@ CREATE TABLE IF NOT EXISTS `order_details` (
 -- A tábla adatainak kiíratása `order_details`
 --
 
-INSERT INTO `order_details` (`order_id`, `item_id`, `quantity`) VALUES
-(1, 1, 2),
-(1, 1, 2),
-(1, 6, 1);
+INSERT INTO `order_details` (`order_id`, `item_id`, `quantity`, `postal_code`, `city`, `street`, `number`) VALUES
+(13, 16, 1, '2660', 'Balassagyarmat', 'Baltik Frigyes utca', '15'),
+(13, 17, 1, '2660', 'Balassagyarmat', 'Baltik Frigyes utca', '15'),
+(14, 17, 1, '2660', 'Balassagyarmat', 'Baltik Frigyes utca', '15'),
+(15, 19, 1, '2660', 'Balassagyarmat', 'Baltik Frigyes utca', '15'),
+(17, 46, 1, '2660', 'Balassagyarmat', 'Baltik Frigyes utca', '12'),
+(17, 50, 1, '2660', 'Balassagyarmat', 'Baltik Frigyes utca', '12');
 
 -- --------------------------------------------------------
 
@@ -182,16 +208,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `uc_activation_selector` (`activation_selector`),
   UNIQUE KEY `uc_forgotten_password_selector` (`forgotten_password_selector`),
   UNIQUE KEY `uc_remember_selector` (`remember_selector`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- A tábla adatainak kiíratása `users`
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `email`, `activation_selector`, `activation_code`, `forgotten_password_selector`, `forgotten_password_code`, `forgotten_password_time`, `remember_selector`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2y$12$PHMty7VifCX5N4vACSx9aeQEyaTxuI1l9SSyRAbNWX/f8JtT81RKq', 'admin@admin.com', NULL, '', NULL, NULL, NULL, NULL, NULL, 1268889823, 1588855790, 1, 'Admin', 'istrator', 'ADMIN', '0'),
-(2, '::1', 'budzse', '$2y$10$C7d.5iyy4z6D5VRRQwn3vuF..qrGeLbtrqDkmYlKQnIVC1IPNpenO', 'vereczkibalint@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1588840344, 1588841279, 1, 'Bálint Zoltán', 'Vereczki', NULL, NULL),
-(3, '::1', 'teszt', '$2y$10$6wkE.IyU/pAdcB5MFGpeaOwe6ppuLOVjcvtBjmghmTSKGbqqCqsDS', 'teszt@elek.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1588840672, 1588927557, 1, 'elek', 'teszt', NULL, NULL);
+(5, '::1', 'admin', '$2y$12$KnXQGpk4V6cVelR3dPdPt.1he59UBwCvClbusu416Zu/dnJDsc3Bq', 'admin@admin.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1589128929, 1589471025, 1, 'admin', 'admin', '', ''),
+(7, '::1', 'demo', '$2y$10$QAxmASWH5s5pZO9M6XLo5eo6vd/lL.5PCZd/JVv3gC1PGhZi79pmC', 'demo@demo.hu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1589397916, 1589471526, 1, 'demo', 'demo', '', '');
 
 -- --------------------------------------------------------
 
@@ -208,17 +233,15 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
   UNIQUE KEY `uc_users_groups` (`user_id`,`group_id`),
   KEY `fk_users_groups_users1_idx` (`user_id`),
   KEY `fk_users_groups_groups1_idx` (`group_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- A tábla adatainak kiíratása `users_groups`
 --
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
-(1, 1, 1),
-(2, 1, 2),
-(3, 2, 2),
-(4, 3, 2);
+(14, 5, 1),
+(15, 7, 2);
 
 --
 -- Megkötések a kiírt táblákhoz
