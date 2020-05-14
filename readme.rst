@@ -10,3 +10,4 @@ PizzaShop
 | demo - demodemo
 
 | A gyökérkönyvtárban található import_test.csv fájl tartalmaz néhány teszt adatot az importálás kipróbálásához.
+| A gyökérkönyvtárban található IMPORT.sql fájl tartalmazza a phpMyAdmin exportot!
