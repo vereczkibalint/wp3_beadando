@@ -7,12 +7,12 @@
     
         <h1 class="h3 mb-3 font-weight-normal">Bejelentkezés</h1>
         
-        <?php echo form_label('Email:','email', array('class'=>'sr-only'));?>
-        <?php echo form_input($identity,set_value('email'), array(
-            'type'=>'email',
-            'id'=>'email',
+        <?php echo form_label('Felhasználónév:','email', array('class'=>'sr-only'));?>
+        <?php echo form_input($identity,set_value('username'), array(
+            'type'=>'text',
+            'id'=>'username',
             'class' => 'form-control',
-            'placeholder'=>'Email cím'
+            'placeholder'=>'Felhasználónév'
         ));?>
         <?php echo form_error('email');?>
         
