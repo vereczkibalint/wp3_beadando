@@ -6,6 +6,7 @@ class Admin extends CI_Controller{
         $this->load->model('pizza_model', 'pizza');
         $this->load->model('category_model', 'category');
         $this->load->helper('form');
+        $this->load->helper('file');
         $this->load->library('form_validation');
         $this->load->library('upload');
     }
@@ -141,6 +142,80 @@ class Admin extends CI_Controller{
         }
         else{
             show_error('Az oldal megtekintéséhez admin jogosultság szükséges!');
+        }
+    }
+    
+    public function import_item(){
+        if($this->ion_auth->is_admin()){
+            $this->load->library('CSVParser', 'csvparser');
+            if($this->input->post('submit')){
+                $success = true;
+                $this->form_validation->set_rules('import_file', 'CSV import fájl', 'callback_validate_csv');
+                if($this->form_validation->run() === TRUE){
+                    if(is_uploaded_file($_FILES['import_file']['tmp_name'])){
+                        $csv_data = $this->csvparser->parse($_FILES['import_file']['tmp_name']);
+                        if(!empty($csv_data)){
+                            foreach($csv_data as $row){
+                                $item = [
+                                    'category_id' => $row['Category'],
+                                    'name' => $row['Name'],
+                                    'price' => $row['Price'],
+                                    'image' => null
+                                ];
+                                
+                                $category_id = $this->category->get_id_by_name($row['Category']);
+                                if(empty($category_id)){
+                                    $cat_id = $this->category->create($row['Category']);
+                                    $item['category_id'] = $cat_id;
+                                }else{
+                                    $item['category_id'] = $category_id->category_id;
+                                }
+ 
+                                if(!$this->pizza->insert($item['name'], $item['category_id'], $item['price'], $item['image'])){
+                                    $success = false;
+                                }
+                            }
+                            
+                            if($success){
+                                $view_params['message'] = "Sikeres importálás!";
+                                $this->load->view('admin/import_item', $view_params);
+                            }else{
+                                $view_params['message'] = "Sikertelen importálás!";
+                                $this->load->view('admin/import_item', $view_params);
+                            }
+                        }
+                    }else{
+                        $view_params['message'] = "Hiba a fájl feltöltésekor!";
+                        $this->load->view('admin/import_item', $view_params);
+                    }
+                }else{
+                    $view_params['message'] = "Hibás fájl!";
+                    $this->load->view('admin/import_item', $view_params);
+                }
+            }else{
+                $view_params['message'] = "";
+                $this->load->view('admin/import_item', $view_params);
+            }
+        }else{
+            show_error('Az oldal megtekintéséhez admin jogosultság szükséges!');
+        }
+    }
+    
+    public function validate_csv($string){
+        $allowed_mime_types = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain');
+        if(isset($_FILES['import_file']['name']) && $_FILES['import_file']['name'] != ""){
+            $mime = get_mime_by_extension($_FILES['import_file']['name']);
+            $file_array = explode('.', $_FILES['import_file']['name']);
+            $extension = end($file_array);
+            if(($extension == 'csv') && in_array($mime, $allowed_mime_types)){
+                return true;
+            }else{
+                $this->form_validation->set_message('file_validation', 'Csak CSV fájl engedélyezett!');
+                return false;
+            }
+        }else{
+            $this->form_validation->set_message('file_validation', 'Nem választott ki fájlt!');
+            return false;
         }
     }
 }
