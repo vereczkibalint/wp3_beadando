@@ -7,7 +7,6 @@
     <h2 class="text-center">Kosár</h2>
     <table class="table">
         <thead>
-            <th>Termék azonosító</th>
             <th>Termék neve</th>
             <th>Termék ára</th>
             <th>Műveletek</th>
@@ -15,7 +14,6 @@
         <tbody>
             <?php foreach($items as $item): ?>
             <tr>
-                <td><?=$item['item_id']?></td>
                 <td><?=$item['name']?></td>
                 <td><?=$item['price']?> Ft</td>
                 <td><a href="<?=base_url('cart/remove/'.$item['item_id'])?>" class="text-danger">Töröl</a></td>
