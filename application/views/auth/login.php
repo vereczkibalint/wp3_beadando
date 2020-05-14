@@ -1,6 +1,8 @@
 <?php $this->load->view('layout/header'); ?>
 <div class='text-center loginBox'>
-    <div id="infoMessage"><?php echo $message;?></div>
+    <?php if(isset($message) && !empty($message)) : ?>
+        <div class="alert alert-info"><?=$message?></div>
+    <?php endif; ?>
     <?php echo form_open('auth/login', array('class'=>'login-form'));?>
     
         <h1 class="h3 mb-3 font-weight-normal">Bejelentkezés</h1>
