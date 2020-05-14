@@ -36,12 +36,8 @@ class Register extends CI_Controller{
             ];
             
             if($this->ion_auth->register($username, $password, $email, $additional_data)){
-                $_SESSION['auth_message'] = "Sikeres regisztráció!";
-                $this->session->mark_as_flash('auth_message');
                 redirect('auth/login');
             }else{
-                $_SESSION['auth_message'] = $this->ion_auth->errors();
-                $this->session->mark_as_flash('auth_message');
                 redirect('register');
             }
         }
