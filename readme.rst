@@ -8,3 +8,5 @@ PizzaShop
 
 | admin - password
 | demo - demodemo
+
+| A gyökérkönyvtárban található import_test.csv fájl tartalmaz néhány teszt adatot az importálás kipróbálásához.
