@@ -32,7 +32,7 @@ class Cart_model extends CI_Model{
     }
     
     public function remove_from_cart($item_id){
-        return $this->db->delete('cart', ['item_id' => $item_id]);
+        return $this->db->delete('cart', ['item_id' => $item_id], 1);
     }
     
     public function empty_cart(){
