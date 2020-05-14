@@ -15,12 +15,12 @@
     <?php echo form_label('Kategória:','category');?>
     <select name="category" id="category" class="form-control mb-3">
         <?php foreach($categories as $category): ?>
-        <option value="<?=$category->category_id?>"><?=$category->category_name?></option>
+        <option value="<?=$category->category_id?>" <?php echo $pizza->category_id == $category->category_id ? "selected" : ""; ?>><?=$category->category_name?></option>
         <?php endforeach; ?>
     </select>
     <?php echo form_error('category');?>
     
-    <?php echo form_label('Ár:', 'price'); ?>,
+    <?php echo form_label('Ár:', 'price'); ?>
     <?php
     $data = array(
         'name' => 'price',
