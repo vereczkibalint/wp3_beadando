@@ -104,6 +104,9 @@ class Admin extends CI_Controller{
                 show_error('Hibás paraméterek!');
             }else{
                 $pizza = $this->pizza->select_by_id($itemid);
+                if($pizza == null){
+                    show_error('Nem létező rekord!');
+                }
                 $view_params['categories'] = $this->category->get_list();
                 if($this->input->post('submit')){
                     $this->form_validation->set_rules('name','Megnevezés','required|min_length[4]|max_length[50]');
