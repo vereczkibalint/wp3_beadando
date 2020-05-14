@@ -599,6 +599,10 @@ class Auth extends CI_Controller
 			
 		//USAGE NOTE - you can do more complicated queries like this
 		//$groups = $this->ion_auth->where(['field' => 'value'])->groups()->result_array();
+                
+                if($user == null){
+                    show_error('Nem létező user!');
+                }
 	
 
 		// validate form input
