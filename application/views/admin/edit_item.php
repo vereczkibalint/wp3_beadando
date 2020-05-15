@@ -35,7 +35,7 @@
     ?>
     <?php echo form_error('price');?>
     
-    <?php echo form_submit('submit', 'Mentés'); ?>
+    <?php echo form_submit('submit', 'Mentés', ["class" => "btn btn-primary"]); ?>
     
     
     <?php echo form_close(); ?>
